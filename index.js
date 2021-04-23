@@ -22,7 +22,14 @@ app.use('/products', require('./src/routes/products'))
 
 //<---------------port---------------->
 
+app.get('/', (req, res) => {
+    const data = {
+        success: true,
+        message: 'Backend is running wel'
+    }
+    res.send(data)
+})
+
 app.listen(APP_PORT, () => {
     console.log(`Application is running opn port ${APP_PORT}`)
-  })
-  
+})
