@@ -17,6 +17,7 @@ app.use('/uploads', express.static('uploads'))
 
 //<----------------- routes-------------->
 app.use('/auth', require('./src/routes/auth.js'))
+app.use('/users', require('./src/routes/auth.js'))
 app.use('/products', require('./src/routes/products'))
 
 //<---------------port---------------->

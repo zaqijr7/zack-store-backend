@@ -75,7 +75,7 @@ exports.updateProduct = async (req, res) => {
             }
             console.log(dataFinnally, '<<<<<<<ini produk');
 
-            return response.responseStatus(res, 200, true, 'Add Product Successfully', dataFinnally)
+            return response.responseStatus(res, 200, true, 'Update Product Successfully', dataFinnally)
         } catch (err) {
             return response.responseStatus(res, 400, false, 'Please try again later')
         }
@@ -93,7 +93,17 @@ exports.getProductById = async (req, res) => {
             price: dataProd[0].price,
             pict: `${APP_URL}${APP_PORT}/${dataProd[0].pict}`
         }
-        return response.responseStatus(res, 200, true, 'Add Product Successfully', dataFinnally)
+        return response.responseStatus(res, 200, true, 'Detail Product', dataFinnally)
+    } catch (err) {
+        return response.responseStatus(res, 400, false, 'Please try again later')
+    }
+}
+
+exports.deleteProductById = async (req, res) => {
+    const { id } = req.params
+    try {
+        await productModels.deleteProduct(id)
+        return response.responseStatus(res, 200, true, 'Delete Product Successfully')
     } catch (err) {
         return response.responseStatus(res, 400, false, 'Please try again later')
     }
@@ -103,7 +113,7 @@ exports.getAllProducts = async (req, res) => {
     const cond = req.query
     cond.search = cond.search || ''
     cond.page = Number(cond.page) || 1
-    cond.limit = Number(cond.limit) || 3
+    cond.limit = Number(cond.limit) || 5
     cond.dataLimit = cond.limit * cond.page
     cond.offset = (cond.page - 1) * cond.limit
     cond.sort = cond.sort || 'createdAt'
@@ -119,6 +129,7 @@ exports.getAllProducts = async (req, res) => {
           name: results[index].name,
           description: results[index].description,
           pict: `${IP_URL_DEVICE}${APP_PORT}/${results[index].pict}`,
+          price: results[index].price,
         }
         dataFinall.push(FetchData)
       }

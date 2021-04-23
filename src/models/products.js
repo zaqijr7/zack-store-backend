@@ -67,3 +67,16 @@ exports.totalData = (cond) => {
       })
     })
   }
+
+  exports.deleteProduct = (id) => {
+    return new Promise((resolve, reject) => {
+     const q =  db.query(`
+      DELETE FROM product
+      WHERE id='${id}'
+      `, (err, res, field) => {
+        if (err) reject(err)
+        resolve(res)
+      })
+      console.log(q.sql);
+    })
+  }
